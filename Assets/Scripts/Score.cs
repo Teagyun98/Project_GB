@@ -13,13 +13,29 @@ public class Score : MonoBehaviourPunCallbacks
 		meshRenderer = GetComponent<MeshRenderer>();
 	}
 
-	private void Start()
+    public override void OnEnable()
+    {
+		base.OnEnable();
+
+        if(GameManager.instance.poolScoreObjectList.Contains(this) == true)
+			GameManager.instance.poolScoreObjectList.Remove(this);
+    }
+
+    private void Start()
 	{
 		if(photonView.IsMine)
 			photonView.RPC("SetLevel", RpcTarget.AllBuffered, Level);
 	}
 
-	[PunRPC]
+    public override void OnDisable()
+    {
+        base.OnDisable();
+
+		if(GameManager.instance.poolScoreObjectList.Contains(this) == false)
+			GameManager.instance.poolScoreObjectList.Add(this);
+    }
+
+    [PunRPC]
 	public void SetLevel(int level)
 	{
 		Level = level;

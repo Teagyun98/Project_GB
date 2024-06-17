@@ -38,10 +38,8 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
 
 	public void OnClick()
 	{
-		// 플레이어 스폰
-		Vector3 spawnPosition = new Vector3(Random.Range(-50f, 50f), 0f, Random.Range(-50f, 50f));
-		GameObject player = PhotonNetwork.Instantiate("PlayerPrefab", spawnPosition, Quaternion.identity, 0);
-		GameManager.instance.StartGame();
+		GameManager.instance.SpawnPlayerObject();
+        GameManager.instance.StartGame();
 		panel.SetActive(false);
 	}
 }
