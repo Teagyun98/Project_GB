@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PhotonNetworkManager : MonoBehaviourPunCallbacks
 {
+	// photon 서버 연결 상태를 알려주고 게임을 시작할 수 있게 해주는 패널
 	[SerializeField] private GameObject panel;
 	[SerializeField] private TextMeshProUGUI log;
 	[SerializeField] private Button startBtn;
@@ -36,6 +37,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
 		startBtn.gameObject.SetActive(true);
 	}
 
+	// 플레이어를 생성하고 게임시작 함수를 실행시킨다.
 	public void OnClick()
 	{
 		GameManager.instance.SpawnPlayerObject();
