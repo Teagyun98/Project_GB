@@ -72,16 +72,16 @@ public class GameManager : MonoBehaviourPunCallbacks
 		if (poolScoreObjectList.Count > 0)
 		{
 			scoreObject = poolScoreObjectList[0];
-			scoreObject.transform.position = spawnPosition;
-			scoreObject.gameObject.SetActive(true);
-		}
+			scoreObject.ActiveOrder(true);
+            scoreObject.transform.position = spawnPosition;
+        }
 		else
 		{
 			GameObject newScoreObject = PhotonNetwork.Instantiate("ScoreObject", spawnPosition, Quaternion.identity);
             scoreObject = newScoreObject.GetComponent<Score>();
         }
 
-        scoreObject.SetLevel(Random.Range(1, 7));
+		scoreObject.SetLevelOrder(Random.Range(1, 7));
 	}
 
 	// 특정 범위 내에 플레이어를 생성하는 함수
@@ -96,8 +96,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (poolPlayerObjectList.Count > 0)
         {
             player = poolPlayerObjectList[0];
-            player.transform.position = spawnPosition;
 			player.ActiveOrder(true);
+            player.transform.position = spawnPosition;
         }
         else
         {
@@ -109,6 +109,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 	public void GameOver()
 	{
 		if(restartPanel != null)
-			restartPanel.gameObject.SetActive(true);
-	}
+		{
+            restartPanel.gameObject.SetActive(true);
+			controller.SetActive(false);
+        }
+    }
 }

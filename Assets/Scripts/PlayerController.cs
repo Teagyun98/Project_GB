@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             float newScale = transform.localScale.x + ((float)score.Level / 10);
 
-            score.gameObject.SetActive(false);
+            score.ActiveOrder(false);
             photonView.RPC("SetScale", RpcTarget.AllBuffered, newScale);
 
             StartCoroutine(ResetEnterCollision());
@@ -96,12 +96,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SetScale(float scale)
 	{
-        Debug.Log("Big");
         MyScale = scale;
         transform.localScale = Vector3.one * MyScale;
     }
 
-    // 오브젝트 활성화 명령을 내리는 함수
+    // 오브젝트 활성화 명령이 PhotonView에도 적용될 수 있도록 해주는 함수
     public void ActiveOrder(bool active)
     {
        if(photonView.IsMine) 

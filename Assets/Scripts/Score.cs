@@ -37,12 +37,34 @@ public class Score : MonoBehaviourPunCallbacks
 			GameManager.instance.poolScoreObjectList.Add(this);
     }
 
+	public void SetLevelOrder(int Level)
+	{
+        if (photonView.IsMine)
+            photonView.RPC("SetLevel", RpcTarget.AllBuffered, Level);
+    }
+
 	// Score Object가 생성 될 때 레벨에 맞는 Material과 Scale 설정 함수
     [PunRPC]
-	public void SetLevel(int level)
+	private void SetLevel(int level)
 	{
 		Level = level;
 		transform.localScale = Vector3.one * Level;
 		meshRenderer.material = matList[Level - 1];
 	}
+
+    // 오브젝트 활성화 명령이 PhotonView에도 적용될 수 있도록 해주는 함수
+    public void ActiveOrder(bool active)
+    {
+        if (photonView.IsMine)
+        {
+            photonView.RPC("SetActive", RpcTarget.AllBuffered, active);
+        }
+    }
+
+    // 오브젝트 활성화 함수
+    [PunRPC]
+    private void SetActive(bool active)
+    {
+        gameObject.SetActive(active);
+    }
 }

@@ -18,7 +18,7 @@ public class CameraFollow : MonoBehaviour
             // 플레이어의 크기에 따라 카메라의 멀어짐 정도 변경
             Camera.main.orthographicSize = 5 * target.localScale.x;
             // 카메라의 현재 크기 최신화
-            meter.text = target.localScale.x + "M";
+            meter.text = $"{target.localScale.x : 0.0}M";
         }
     }
 }
